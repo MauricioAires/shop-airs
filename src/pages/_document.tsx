@@ -1,5 +1,5 @@
-import { getCssText } from '@/styles';
-import { Head, Html, Main, NextScript } from 'next/document';
+import { getCssText } from '@/styles'
+import { Head, Html, Main, NextScript } from 'next/document'
 
 export default function Document() {
   return (
@@ -12,14 +12,14 @@ export default function Document() {
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
           rel="stylesheet"
         />
 
         <style
           id="stitches"
           dangerouslySetInnerHTML={{
-            __html: getCssText()
+            __html: getCssText(),
           }}
         />
       </Head>
@@ -29,5 +29,5 @@ export default function Document() {
         <NextScript />
       </body>
     </Html>
-  );
+  )
 }

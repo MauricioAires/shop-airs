@@ -5,6 +5,17 @@ export const globalStyles = globalCss({
     margin: 0,
     padding: 0,
   },
+  '::-webkit-scrollbar': {
+    width: 9,
+  },
+  '::-webkit-scrollbar-track': {
+    backgroundColor: '$gray900',
+  },
+
+  '::-webkit-scrollbar-thumb': {
+    backgroundColor: '$gray800',
+  },
+
   body: {
     '-webkit-font-smoothing': 'antialiased',
     backgroundColor: '$gray900',
