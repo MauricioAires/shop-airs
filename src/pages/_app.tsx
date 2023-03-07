@@ -8,12 +8,15 @@ import logoImg from '@/assets/logo.svg'
 globalStyles()
 
 import * as S from '@/styles/pages/app'
+import Link from 'next/link'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <S.Container>
       <S.Header>
-        <Image src={logoImg} alt="" />
+        <Link href="/">
+          <Image src={logoImg} alt="" />
+        </Link>
       </S.Header>
       <Component {...pageProps} />
     </S.Container>
