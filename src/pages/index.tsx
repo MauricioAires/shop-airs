@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
@@ -42,11 +42,22 @@ export default function Home({ products }: HomeProps) {
 }
 
 /**
- * NOTE: Todo código aqui adicionado não será retornado
+ * NOTE: getServerSide => Todo código aqui adicionado não será retornado
  * para o usuário final, dessa forma aqui pode ser feito
  * requisições com chaves secretas
  */
-export const getServerSideProps: GetServerSideProps = async () => {
+
+/**
+ * NOTE: getStaticProps => esse código não é executado a cada
+ * requisição, ele é chamado em apenas dois casos
+ *
+ * 1 -> Quando está gerando o build da aplicação
+ *
+ * Nesse modelo não temos acessando ao contexto da requisição, então
+ * não temos como passar um token de usuário logado, headers
+ */
+
+export const getStaticProps: GetStaticProps = async () => {
   const response = await stripe.products.list({
     expand: ['data.default_price'],
   })
@@ -58,11 +69,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: (price.unit_amount as number) / 100, // preço em centavos * 100
+      price: new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format((price.unit_amount as number) / 100), // preço em centavos * 100
     }
   })
 
   return {
+    revalidate: 60 * 60 * 2, // 2 horas
     props: {
       products,
     },
