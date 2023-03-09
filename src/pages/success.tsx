@@ -1,3 +1,20 @@
+import Link from 'next/link'
+import * as S from '../styles/pages/success'
+
 export default function SuccessPage() {
-  return <h1>Success Page</h1>;
+  return (
+    <S.SuccessContainer>
+      <h1>Compra efetuada!</h1>
+
+      <S.ImageContainer />
+
+      <p>
+        Uhuul <strong>Mauricio Aires</strong>, sua
+        <strong> Camiseta Beyond the Limits</strong> já está a caminho da sua
+        casa.
+      </p>
+
+      <Link href="/">Voltar ao catálago</Link>
+    </S.SuccessContainer>
+  )
 }
