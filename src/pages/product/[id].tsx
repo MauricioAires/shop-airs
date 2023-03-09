@@ -1,12 +1,15 @@
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
+import { useState } from 'react'
+
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+
+import axios from 'axios'
 
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 
 import * as S from '../../styles/pages/product'
-import { useRouter } from 'next/router'
-
 interface ProductPageProps {
   product: {
     id: string
@@ -14,14 +17,37 @@ interface ProductPageProps {
     imageUrl: string
     price: string
     description: string
+    defaultPriceId: string
   }
 }
 
 export default function ProductPage({ product }: ProductPageProps) {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false)
   const { isFallback } = useRouter()
 
   if (isFallback) {
     return <p>Loading...</p>
+  }
+
+  async function handleBuyProduct() {
+    try {
+      setIsCreatingCheckoutSession(true)
+      const response = await axios.post('/api/checkout', {
+        priceId: product.defaultPriceId,
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (err) {
+      /**
+       * NOTE: Conectar com uma ferramenta de observabilidade (Datadog | Sentry)
+       */
+      setIsCreatingCheckoutSession(false)
+
+      alert('Falha ao redirecionar ao checkout!')
+    }
   }
 
   return (
@@ -34,7 +60,13 @@ export default function ProductPage({ product }: ProductPageProps) {
         <h1> {product.name}</h1>
         <span>{product.price}</span>
         <p>{product.description}</p>
-        <button>Comprar Agora</button>
+        <button
+          disabled={isCreatingCheckoutSession}
+          type="button"
+          onClick={() => handleBuyProduct()}
+        >
+          Comprar Agora
+        </button>
       </S.ProductDetails>
     </S.ProductContainer>
   )
@@ -95,6 +127,7 @@ export const getStaticProps: GetStaticProps<
           style: 'currency',
           currency: 'BRL',
         }).format((price.unit_amount as number) / 100), // preço em centavos * 100
+        defaultPriceId: price.id,
       },
     },
     // revalidate: 60 * 60 * 2, // 2 hour
