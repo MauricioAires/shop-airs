@@ -6,6 +6,7 @@ import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
 
 import * as S from '../styles/pages/success'
+import Head from 'next/head'
 
 interface SuccessPageProps {
   customerName: string
@@ -20,20 +21,28 @@ export default function SuccessPage({
   product,
 }: SuccessPageProps) {
   return (
-    <S.SuccessContainer>
-      <h1>Compra efetuada!</h1>
+    <>
+      <Head>
+        <title>Compra efetuada | Ignite Shop</title>
 
-      <S.ImageContainer>
-        <Image src={product.imageUrl} width={120} height={110} alt="" />
-      </S.ImageContainer>
+        <meta name="robots" content="noindex" />
+      </Head>
 
-      <p>
-        Uhuul <strong>{customerName}</strong>, sua
-        <strong> {product.name}</strong> já está a caminho da sua casa.
-      </p>
+      <S.SuccessContainer>
+        <h1>Compra efetuada!</h1>
 
-      <Link href="/">Voltar ao catálago</Link>
-    </S.SuccessContainer>
+        <S.ImageContainer>
+          <Image src={product.imageUrl} width={120} height={110} alt="" />
+        </S.ImageContainer>
+
+        <p>
+          Uhuul <strong>{customerName}</strong>, sua
+          <strong> {product.name}</strong> já está a caminho da sua casa.
+        </p>
+
+        <Link href="/">Voltar ao catálago</Link>
+      </S.SuccessContainer>
+    </>
   )
 }
 

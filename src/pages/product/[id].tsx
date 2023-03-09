@@ -10,6 +10,7 @@ import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 
 import * as S from '../../styles/pages/product'
+import Head from 'next/head'
 interface ProductPageProps {
   product: {
     id: string
@@ -51,24 +52,30 @@ export default function ProductPage({ product }: ProductPageProps) {
   }
 
   return (
-    <S.ProductContainer>
-      <S.ImageContainer>
-        <Image src={product.imageUrl} width={520} height={480} alt="" />
-      </S.ImageContainer>
+    <>
+      <Head>
+        <title>{product.name} | Ignite Shop</title>
+      </Head>
 
-      <S.ProductDetails>
-        <h1> {product.name}</h1>
-        <span>{product.price}</span>
-        <p>{product.description}</p>
-        <button
-          disabled={isCreatingCheckoutSession}
-          type="button"
-          onClick={() => handleBuyProduct()}
-        >
-          Comprar Agora
-        </button>
-      </S.ProductDetails>
-    </S.ProductContainer>
+      <S.ProductContainer>
+        <S.ImageContainer>
+          <Image src={product.imageUrl} width={520} height={480} alt="" />
+        </S.ImageContainer>
+
+        <S.ProductDetails>
+          <h1> {product.name}</h1>
+          <span>{product.price}</span>
+          <p>{product.description}</p>
+          <button
+            disabled={isCreatingCheckoutSession}
+            type="button"
+            onClick={() => handleBuyProduct()}
+          >
+            Comprar Agora
+          </button>
+        </S.ProductDetails>
+      </S.ProductContainer>
+    </>
   )
 }
 
