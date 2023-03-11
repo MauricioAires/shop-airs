@@ -9,6 +9,7 @@ globalStyles()
 
 import * as S from '@/styles/pages/app'
 import Link from 'next/link'
+import { ShoppingCart } from '@/components/ShoppingCart'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -17,6 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Link href="/">
           <Image src={logoImg} alt="" />
         </Link>
+        <ShoppingCart />
       </S.Header>
       <Component {...pageProps} />
     </S.Container>

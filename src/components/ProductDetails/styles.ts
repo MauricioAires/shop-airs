@@ -27,6 +27,10 @@ export const ProductDetailsWrapper = styled('footer', {
     height: 56,
     flexShrink: 0,
 
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
     '&:hover': {
       transition: 'all 0.2s ease-in-out',
       background: '$green300',
