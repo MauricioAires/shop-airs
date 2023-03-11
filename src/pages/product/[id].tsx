@@ -71,7 +71,7 @@ export default function ProductPage({ product }: ProductPageProps) {
             type="button"
             onClick={() => handleBuyProduct()}
           >
-            Comprar Agora
+            Colocar na sacola
           </button>
         </S.ProductDetails>
       </S.ProductContainer>
