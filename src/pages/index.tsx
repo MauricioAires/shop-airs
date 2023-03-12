@@ -5,6 +5,8 @@ import { GetStaticProps } from 'next'
 
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
+import { useShoppingCart } from 'use-shopping-cart'
+import { Product } from 'use-shopping-cart/core'
 
 import { useKeenSlider } from 'keen-slider/react'
 
@@ -12,22 +14,42 @@ import 'keen-slider/keen-slider.min.css'
 import * as S from '@/styles/pages/home'
 import { ProductDetails } from '@/components/ProductDetails'
 
+type IProduct = {
+  id: string
+  name: string
+  imageUrl: string
+  price: number
+  formattedPrice: string
+  defaultPriceId: string
+}
 interface HomeProps {
-  products: {
-    id: string
-    name: string
-    imageUrl: string
-    price: string
-  }[]
+  products: IProduct[]
 }
 
 export default function Home({ products }: HomeProps) {
+  const { addItem } = useShoppingCart()
+
   const [sliderRef] = useKeenSlider({
     slides: {
       perView: 3,
       spacing: 48,
     },
   })
+
+  function handleAddShoppingCart(product: IProduct) {
+    const payload: Product = {
+      id: product.id,
+      price_id: product.defaultPriceId,
+      name: product.name,
+      price: product.price,
+      image: product.imageUrl,
+      currency: 'BRL',
+    }
+
+    addItem(payload, {
+      count: 1,
+    })
+  }
 
   return (
     <>
@@ -46,7 +68,11 @@ export default function Home({ products }: HomeProps) {
           >
             <S.Product className="keen-slider__slide">
               <Image src={product.imageUrl} width={520} height={480} alt="" />
-              <ProductDetails price={product.price} name={product.name} />
+              <ProductDetails
+                handleAddShoppingCart={() => handleAddShoppingCart(product)}
+                price={product.formattedPrice}
+                name={product.name}
+              />
             </S.Product>
           </Link>
         ))}
@@ -83,7 +109,9 @@ export const getStaticProps: GetStaticProps = async () => {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: new Intl.NumberFormat('pt-BR', {
+      defaultPriceId: price.id,
+      price: price.unit_amount,
+      formattedPrice: new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
       }).format((price.unit_amount as number) / 100), // preço em centavos * 100
