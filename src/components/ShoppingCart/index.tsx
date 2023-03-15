@@ -11,16 +11,24 @@ type Product = {
   name: string
   image: string
   formattedValue: string
+  quantity: number
 }
 
 export function ShoppingCart() {
   const { removeItem, cartDetails, clearCart, formattedTotalPrice } =
     useShoppingCart()
 
+  console.log(cartDetails)
+
   let products: Product[] = []
+  let quantityProducts = 0
 
   if (cartDetails !== undefined) {
     products = Object.values(cartDetails) as Product[]
+
+    quantityProducts = products.reduce((sum, product) => {
+      return sum + product.quantity
+    }, 0)
   }
 
   return (
@@ -30,7 +38,7 @@ export function ShoppingCart() {
           <S.ShoppingCartWrapper>
             <Handbag weight="bold" size={24} />
 
-            {products.length && <span>{products.length}</span>}
+            {!!quantityProducts && <span>{quantityProducts}</span>}
           </S.ShoppingCartWrapper>
         </Dialog.Trigger>
 
@@ -50,7 +58,12 @@ export function ShoppingCart() {
                     <div>
                       <p>{product.name} </p>
                       <strong>{product.formattedValue}</strong>
-                      <button type="button">Remover</button>
+                      <button
+                        type="button"
+                        onClick={() => removeItem(product.id)}
+                      >
+                        Remover
+                      </button>
                     </div>
                   </li>
                 ))}
@@ -60,11 +73,11 @@ export function ShoppingCart() {
             <footer>
               <div>
                 <span>Quantidade</span>
-                <span>3 items</span>
+                <span>{quantityProducts} items</span>
               </div>
               <div>
                 <strong>Valor total</strong>
-                <strong>$270,00</strong>
+                <strong>{formattedTotalPrice}</strong>
               </div>
               <button>Finalizar compra</button>
             </footer>
