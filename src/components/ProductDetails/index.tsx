@@ -19,7 +19,16 @@ export function ProductDetails({
         <strong>{name}</strong>
         <span>{price}</span>
       </div>
-      <button type="button" onClick={() => handleAddShoppingCart()}>
+      <button
+        type="button"
+        onClick={(e) => {
+          /**
+           * NOTE: impedir que o evento do link seja executado
+           */
+          e.preventDefault()
+          handleAddShoppingCart()
+        }}
+      >
         <Handbag weight="bold" size={32} />
       </button>
     </S.ProductDetailsWrapper>
