@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Head from 'next/head'
 import { GetStaticProps } from 'next'
+import { ProductDetails } from '@/components/ProductDetails'
 
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
@@ -12,7 +13,6 @@ import { useKeenSlider } from 'keen-slider/react'
 
 import 'keen-slider/keen-slider.min.css'
 import * as S from '@/styles/pages/home'
-import { ProductDetails } from '@/components/ProductDetails'
 
 type IProduct = {
   id: string
