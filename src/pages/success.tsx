@@ -1,12 +1,14 @@
+import { useShoppingCart } from 'use-shopping-cart'
+import { useEffect } from 'react'
 import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import Head from 'next/head'
 
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
 
 import * as S from '../styles/pages/success'
-import Head from 'next/head'
 
 type Product = {
   name: string
@@ -21,6 +23,16 @@ export default function SuccessPage({
   customerName,
   products,
 }: SuccessPageProps) {
+  const { clearCart } = useShoppingCart()
+
+  /**
+   * NOTE: Limpar o carrinho quando carregar a página de sucesso
+   */
+  useEffect(() => {
+    clearCart()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <>
       <Head>
