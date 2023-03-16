@@ -36,12 +36,19 @@ export const SuccessContainer = styled('main', {
   },
 })
 
+export const ProductsWrapper = styled('div', {
+  display: 'flex',
+  position: 'relative',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
 export const ImageContainer = styled('div', {
   width: '100%',
   maxWidth: 130,
-  height: 145,
+  height: 130,
   background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
-  borderRadius: 8,
+  borderRadius: '100%',
   padding: '0.25rem',
 
   marginTop: '4rem',
@@ -50,6 +57,16 @@ export const ImageContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  transition: 'all ease-in-out 0.2s',
+
+  '&:not(:first-child)': {
+    marginLeft: '-8%',
+  },
+
+  '&:hover': {
+    boxShadow: ' -4px 0px 30px rgba(0, 0, 0, 0.8)',
+    transform: 'translateY(-10%)',
+  },
 
   img: {
     objectFit: 'cover',
