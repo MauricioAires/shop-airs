@@ -12,7 +12,7 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { priceId } = req.body
+  const { wishlist } = req.body
 
   if (req.method !== 'POST') {
     return res.status(405).json({
@@ -20,9 +20,9 @@ export default async function handle(
     })
   }
 
-  if (!priceId) {
+  if (!wishlist.length) {
     return res.status(400).json({
-      error: 'price not found',
+      error: 'wishlist not found',
     })
   }
 
@@ -33,12 +33,7 @@ export default async function handle(
     success_url: successUrl,
     cancel_url: cancelUrl,
     mode: 'payment',
-    line_items: [
-      {
-        price: priceId,
-        quantity: 1,
-      },
-    ],
+    line_items: wishlist,
   })
 
   return res.status(201).json({
