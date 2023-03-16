@@ -5,6 +5,8 @@ import * as Dialog from '@radix-ui/react-dialog'
 
 import * as S from './styles'
 import Image from 'next/image'
+import { useState } from 'react'
+import axios from 'axios'
 
 type Product = {
   id: string
@@ -12,13 +14,19 @@ type Product = {
   image: string
   formattedValue: string
   quantity: number
+  price_id?: string
+}
+
+type ProductPayload = {
+  price: string
+  quantity: number
 }
 
 export function ShoppingCart() {
-  const { removeItem, cartDetails, clearCart, formattedTotalPrice } =
-    useShoppingCart()
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false)
 
-  console.log(cartDetails)
+  const { removeItem, cartDetails, formattedTotalPrice } = useShoppingCart()
 
   let products: Product[] = []
   let quantityProducts = 0
@@ -29,6 +37,36 @@ export function ShoppingCart() {
     quantityProducts = products.reduce((sum, product) => {
       return sum + product.quantity
     }, 0)
+  }
+
+  async function handleBuyProduct() {
+    try {
+      setIsCreatingCheckoutSession(true)
+
+      const wishlist = products.reduce((items: ProductPayload[], product) => {
+        items.push({
+          price: product.price_id!,
+          quantity: product.quantity,
+        })
+
+        return items
+      }, [])
+
+      const response = await axios.post('/api/checkout', {
+        wishlist,
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (err) {
+      /**
+       * NOTE: Conectar com uma ferramenta de observabilidade (Datadog | Sentry)
+       */
+      setIsCreatingCheckoutSession(false)
+
+      alert('Falha ao redirecionar ao checkout!')
+    }
   }
 
   return (
@@ -79,7 +117,13 @@ export function ShoppingCart() {
                 <strong>Valor total</strong>
                 <strong>{formattedTotalPrice}</strong>
               </div>
-              <button>Finalizar compra</button>
+              <button
+                type="submit"
+                onClick={() => handleBuyProduct()}
+                disabled={isCreatingCheckoutSession}
+              >
+                Finalizar compra
+              </button>
             </footer>
           </S.Content>
         </Dialog.Portal>
