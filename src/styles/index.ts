@@ -9,6 +9,13 @@ export const {
   theme,
   createTheme,
 } = createStitches({
+  media: {
+    sm: '(max-width: 30em) ', // 480px
+    md: '(max-width: 48em) ', // 768px
+    lg: '(max-width: 62em) ', // 992px
+    xl: '(max-width: 80em) ', // 1280px
+    '2xl': '(max-width: 96em) ', // 1536px
+  },
   theme: {
     colors: {
       white: '#fff',
