@@ -1,4 +1,3 @@
-import { keyframes } from '@stitches/react'
 import { styled } from '..'
 
 export const ProductContainer = styled('main', {
@@ -15,6 +14,14 @@ export const ProductContainer = styled('main', {
 
   '>a': {
     color: '$gray300',
+    position: 'absolute',
+    left: 0,
+  },
+
+  '@lg': {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
 })
 
@@ -25,6 +32,7 @@ export const ButtonBack = styled('button', {
 
   position: 'absolute',
   transform: 'translateY(-130%)',
+  left: 0,
 
   width: 48,
   height: 48,
@@ -59,8 +67,22 @@ export const ImageContainer = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
 
+  '@lg': {
+    maxWidth: '100%',
+    height: 'calc(456px - 0.25rem)',
+  },
+
+  '@md': {
+    height: 'calc(356px - 0.25rem)',
+  },
+
   img: {
     objectFit: 'cover',
+
+    '@md': {
+      width: 330,
+      height: 280,
+    },
   },
 })
 
@@ -90,7 +112,7 @@ export const ProductDetails = styled('div', {
   },
 
   button: {
-    marginTop: 'auto',
+    marginTop: '3rem',
     backgroundColor: '$green500',
     color: '$white',
     borderRadius: 8,
