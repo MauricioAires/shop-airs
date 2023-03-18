@@ -1,14 +1,15 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-
+import Head from 'next/head'
+import { Product } from 'use-shopping-cart/core'
+import { useShoppingCart } from 'use-shopping-cart'
+import { ArrowLeft } from 'phosphor-react'
+import Link from 'next/link'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 
 import * as S from '../../styles/pages/product'
-import Head from 'next/head'
-import { Product } from 'use-shopping-cart/core'
-import { useShoppingCart } from 'use-shopping-cart'
 
 type IProduct = {
   id: string
@@ -54,6 +55,11 @@ export default function ProductPage({ product }: ProductPageProps) {
       </Head>
 
       <S.ProductContainer>
+        <Link href="/">
+          <S.ButtonBack type="button">
+            <ArrowLeft weight="bold" size={20} />
+          </S.ButtonBack>
+        </Link>
         <S.ImageContainer>
           <Image src={product.imageUrl} width={520} height={480} alt="" />
         </S.ImageContainer>
