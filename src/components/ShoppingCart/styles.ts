@@ -2,6 +2,25 @@ import { styled } from '@stitches/react'
 
 import * as Dialog from '@radix-ui/react-dialog'
 
+export const EmptyCart = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
+  gap: '1rem',
+  margin: 'auto 0',
+})
+
+export const RedirectCatalog = styled(Dialog.Close, {
+  fontSize: '$lg',
+  color: '$green500',
+  fontWeight: 'bold',
+  background: 'transparent',
+  '&:hover': {
+    color: '$green500',
+  },
+})
+
 export const Close = styled(Dialog.Close, {
   background: 'transparent',
   color: '$gray300',

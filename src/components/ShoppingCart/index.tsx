@@ -1,4 +1,4 @@
-import { Handbag, X } from 'phosphor-react'
+import { AndroidLogo, Handbag, X } from 'phosphor-react'
 import { useShoppingCart } from 'use-shopping-cart'
 
 import * as Dialog from '@radix-ui/react-dialog'
@@ -7,6 +7,7 @@ import * as S from './styles'
 import Image from 'next/image'
 import { useState } from 'react'
 import axios from 'axios'
+import Link from 'next/link'
 
 type Product = {
   id: string
@@ -84,47 +85,64 @@ export function ShoppingCart() {
           <S.Overlay />
           <S.Content>
             <S.MainContent>
-              <S.Title>Sacola de compras</S.Title>
+              <S.Title>Carrinho de compras</S.Title>
               <S.Close>
                 <X size={24} weight="bold" />
               </S.Close>
 
-              <S.ListProducts>
-                {products.map((product) => (
-                  <li key={product.id}>
-                    <Image src={product.image} width={100} height={93} alt="" />
-                    <div>
-                      <p>{product.name} </p>
-                      <strong>{product.formattedValue}</strong>
-                      <button
-                        type="button"
-                        onClick={() => removeItem(product.id)}
-                      >
-                        Remover
-                      </button>
-                    </div>
-                  </li>
-                ))}
-              </S.ListProducts>
+              {products.length === 0 ? (
+                <S.EmptyCart>
+                  <AndroidLogo size={50} />
+                  <h1>Oops.. o carrinho está vazio</h1>
+                  <Link href="/">
+                    <S.RedirectCatalog>Voltar ao catálago</S.RedirectCatalog>
+                  </Link>
+                </S.EmptyCart>
+              ) : (
+                <S.ListProducts>
+                  {products.map((product) => (
+                    <li key={product.id}>
+                      <Image
+                        src={product.image}
+                        width={100}
+                        height={93}
+                        alt=""
+                      />
+                      <div>
+                        <p>{product.name} </p>
+                        <strong>{product.formattedValue}</strong>
+                        <button
+                          type="button"
+                          onClick={() => removeItem(product.id)}
+                        >
+                          Remover
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </S.ListProducts>
+              )}
             </S.MainContent>
 
-            <footer>
-              <div>
-                <span>Quantidade</span>
-                <span>{quantityProducts} items</span>
-              </div>
-              <div>
-                <strong>Valor total</strong>
-                <strong>{formattedTotalPrice}</strong>
-              </div>
-              <button
-                type="submit"
-                onClick={() => handleBuyProduct()}
-                disabled={isCreatingCheckoutSession}
-              >
-                Finalizar compra
-              </button>
-            </footer>
+            {!!products.length && (
+              <footer>
+                <div>
+                  <span>Quantidade</span>
+                  <span>{quantityProducts} items</span>
+                </div>
+                <div>
+                  <strong>Valor total</strong>
+                  <strong>{formattedTotalPrice}</strong>
+                </div>
+                <button
+                  type="submit"
+                  onClick={() => handleBuyProduct()}
+                  disabled={isCreatingCheckoutSession}
+                >
+                  Finalizar compra
+                </button>
+              </footer>
+            )}
           </S.Content>
         </Dialog.Portal>
       </Dialog.Root>
