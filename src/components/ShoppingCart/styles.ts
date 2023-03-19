@@ -9,6 +9,7 @@ export const EmptyCart = styled('div', {
   flexDirection: 'column',
   gap: '1rem',
   margin: 'auto 0',
+  textAlign: 'center',
 })
 
 export const RedirectCatalog = styled(Dialog.Close, {
@@ -21,12 +22,15 @@ export const RedirectCatalog = styled(Dialog.Close, {
   },
 })
 
+export const ContentHeader = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+})
+
 export const Close = styled(Dialog.Close, {
   background: 'transparent',
   color: '$gray300',
-  position: 'absolute',
-  top: 24,
-  right: 24,
   lineHeight: 0,
 })
 
@@ -37,7 +41,7 @@ export const Title = styled(Dialog.Title, {
 
 export const Content = styled(Dialog.Content, {
   borderRadius: 6,
-  padding: '2.5rem 3rem',
+  padding: '2.5rem 2rem',
   background: '$gray800',
   position: 'fixed',
   height: '100vh',
@@ -53,6 +57,7 @@ export const Content = styled(Dialog.Content, {
 
   '@md': {
     width: '100vw',
+    padding: '1rem 1rem',
   },
 
   footer: {
@@ -205,11 +210,19 @@ export const ListProducts = styled('ul', {
       p: {
         fontSize: '$md',
         color: '$gray300',
+
+        '@md': {
+          fontSize: '1rem',
+        },
       },
 
       strong: {
         fontSize: '$lg',
         color: '$gray100',
+
+        '@md': {
+          fontSize: '1rem',
+        },
       },
     },
   },

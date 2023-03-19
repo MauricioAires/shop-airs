@@ -85,10 +85,12 @@ export function ShoppingCart() {
           <S.Overlay />
           <S.Content>
             <S.MainContent>
-              <S.Title>Carrinho de compras</S.Title>
-              <S.Close>
-                <X size={24} weight="bold" />
-              </S.Close>
+              <S.ContentHeader>
+                <S.Title>Carrinho de compras</S.Title>
+                <S.Close>
+                  <X size={24} weight="bold" />
+                </S.Close>
+              </S.ContentHeader>
 
               {products.length === 0 ? (
                 <S.EmptyCart>
