@@ -1,4 +1,4 @@
-import { styled } from '@stitches/react'
+import { styled } from '../../styles'
 
 import * as Dialog from '@radix-ui/react-dialog'
 
@@ -50,6 +50,10 @@ export const Content = styled(Dialog.Content, {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
+
+  '@md': {
+    width: '100vw',
+  },
 
   footer: {
     display: 'flex',
