@@ -14,7 +14,7 @@ export const globalStyles = globalCss({
   },
 
   '::-webkit-scrollbar-thumb': {
-    backgroundColor: '$gray800',
+    backgroundColor: '$gray100',
   },
 
   body: {
