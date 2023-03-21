@@ -48,6 +48,7 @@ export const Content = styled(Dialog.Content, {
   maxHeight: '-webkit-fill-available',
   top: 0,
   right: 0,
+  bottom: 0,
   width: '500px',
   boxShadow: ' -4px 0px 30px rgba(0, 0, 0, 0.8)',
   overflow: 'auto',
