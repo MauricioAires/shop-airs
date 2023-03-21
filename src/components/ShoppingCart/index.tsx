@@ -136,6 +136,20 @@ export function ShoppingCart() {
                   <strong>Valor total</strong>
                   <strong>{formattedTotalPrice}</strong>
                 </div>
+                <p>
+                  Dados bancários para gerar uma compra de teste, número do
+                  cartão <strong>4242 4242 4242 4242</strong>, data de validade{' '}
+                  <strong>
+                    {' '}
+                    {new Intl.DateTimeFormat('pt-BR', {
+                      month: '2-digit',
+                      year: '2-digit',
+                    }).format(
+                      new Date().setMonth(new Date().getMonth() + 2),
+                    )}{' '}
+                  </strong>
+                  e CVV <strong>404</strong>
+                </p>
                 <button
                   type="submit"
                   onClick={() => handleBuyProduct()}

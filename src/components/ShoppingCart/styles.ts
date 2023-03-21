@@ -67,6 +67,19 @@ export const Content = styled(Dialog.Content, {
     flexDirection: 'column',
     marginTop: '2rem',
 
+    p: {
+      background: '$gray900',
+      marginTop: '1rem',
+      fontSize: '0.875rem',
+      padding: '0.5rem',
+      borderRadius: 6,
+      textAlign: 'center',
+
+      strong: {
+        fontSize: '0.875rem',
+      },
+    },
+
     button: {
       backgroundColor: '$green500',
       color: '$white',

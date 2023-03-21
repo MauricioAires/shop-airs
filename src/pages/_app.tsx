@@ -14,6 +14,7 @@ import { globalStyles } from '@/styles/global'
 globalStyles()
 
 import * as S from '@/styles/pages/app'
+import { Footer } from '@/components/Footer'
 
 const STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY as string
 
@@ -34,6 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <ShoppingCart />
         </S.Header>
         <Component {...pageProps} />
+        <Footer />
       </S.Container>
     </CartProvider>
   )
